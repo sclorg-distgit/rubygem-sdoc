@@ -6,7 +6,7 @@
 
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.4.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: RDoc generator to build searchable HTML documentation for Ruby code
 Group: Development/Languages
 # License needs to take RDoc and Darkfish into account apparantly
@@ -90,6 +90,7 @@ pushd .%{gem_instdir}
 sed -i "s/require 'bundler\/setup'//" ./spec/spec_helper.rb
 # To run the tests using minitest 5
 %{?scl:scl enable %{scl} - << \EOF}
+set -e
 ruby -rminitest/autorun -Ilib - << \EOR
   Test = Minitest
   Dir.glob "./spec/*.rb", &method(:require)
@@ -120,6 +121,9 @@ popd
 %{gem_instdir}/spec
 
 %changelog
+* Wed Apr 06 2016 Pavel Valena <pvalena@redhat.com> - 0.4.1-6
+- Fix: build should fail on test failure
+
 * Wed Mar 02 2016 Pavel Valena <pvalena@redhat.com> - 0.4.1-5
 - Rebuilt for rh-ror42
 
